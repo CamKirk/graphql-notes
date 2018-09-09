@@ -10,10 +10,14 @@ var schema = buildSchema(`
 
 // root value passed to all resolve functions in graphql call
 var root = {
-    hello: function(){ return 'Hello world!'}
+    hello:function(){
+        return "Paris";
+    },
+    goodbye:function(){
+        return "Marfa";
+    }
 };
-
 //calling graphql, passing schema, the request string '{hello}', and the root object.
-gq.graphql(schema, '{hello}', root).then(function(res){
+gq.graphql(schema, '{goodbye}', root).then(function(res){
     console.log(res);
 });
