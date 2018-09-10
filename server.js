@@ -4,7 +4,8 @@ var buildSchema = gq.buildSchema;
 //required schema for requests
 var schema = buildSchema(`
     type Query {
-        hello: String
+        hello: String,
+        goodbye: String
     }
 `);
 
@@ -18,6 +19,6 @@ var root = {
     }
 };
 //calling graphql, passing schema, the request string '{hello}', and the root object.
-gq.graphql(schema, '{goodbye}', root).then(function(res){
+gq.graphql(schema, '{goodbye, hello}', root).then(function(res){
     console.log(res);
 });
