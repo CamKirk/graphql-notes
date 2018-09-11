@@ -1,34 +1,29 @@
-var gq = require('graphql');
-var buildSchema = gq.buildSchema;
+var express = require('express');
+var graphqlHTTP = require('express-graphql');
+var buildSchema = require('graphql').buildSchema;
 
-//required schema for requests
+var app = express();
+
 var schema = buildSchema(`
     type Query {
-        hello: String,
-        goodbye: String
-        d20(numDice: Int!): [Int]
+        hello:String
     }
 `);
 
-// root value passed to all resolve functions in graphql call
 var root = {
-    hello:function(){
-        return "Paris";
-    },
-    goodbye:function(){
-        return "Marfa";
-    },
-    d20:function(args){
-        var output = [];
-
-        for (let index = 0; index < args.numDice; index++) {
-            output.push(Math.floor(Math.random()*20)+1);
-        }
-        
-        return output;
+    hello: function(){
+        return "Hello World";
     }
 };
-//calling graphql, passing schema, the request string '{hello}', and the root object.
-gq.graphql(schema, '{d20(numDice: 3), hello}', root).then(function(res){
-    console.log(res);
+
+app.use('/graphql', graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: false
+})).listen(3000,function(){
+    console.log(process.platform);
 });
+
+app.use(express.static('./public'));
+
+app.get('/');

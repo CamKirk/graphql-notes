@@ -26,3 +26,14 @@ var root = {
 - How do I pass in arguments to the root object functions? [Docs](https://graphql.org/graphql-js/passing-arguments/) indicate that I need to make the query object accept arguments. Let's try with their doc example before moving on.
 
 - Adding a d20 function went off without a hitch! Must remember that when you make a request to the function, you must pass the argument *by name* instead of order. Subtle difference, but that's because we're working in the *SDL* language _instead_ of javascript, as odd as that is. This also explains why passing a plain js object into the .graphql() method doesn't quite work out.
+
+- okay, i'm ready to start playing with a live server; I'm moving server.js to an archive folder then starting a new setup.
+
+- starting from the express+graphQL example, then adding in modular SDL schemas. May have to write an index file that grabs everything?
+
+- running into trouble, I'm getting an `undefined` in the last .then() for data, instead of printing "Hello World". Although It appears that the promise from the first .then() _does_ correctly fire and resolve. It also appears that the header `'Content-Type':'application/json'` is absolutely necessary for the fetch request to be sent without immediately receiving a 400 error. I wonder if i can set the request object body to json on the server side to fix that. 
+
+- hitting the error line number actually opens graphiQL if you have the setting set to true. SUPER COOL GUYS! :D
+
+- Changing the first .then() to an arrow function fixes the previous issue I was having with the data. This means I need to treat the `r` argument as a promise, since this probably is a binding or implicit return issue. I should have noticed the .json() immediately. This is was fixed by simply adding return in front of r.json();
+
